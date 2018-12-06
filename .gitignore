@@ -1,2 +1,11 @@
 **/.DS_Store
 **/._.DS_Store
+**/data/*
+.vscode
+**/*.class
+**/__pycache__
+**/saved_model
+**/saved_models
+**/data
+**/log
+
