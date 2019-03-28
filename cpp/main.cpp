@@ -1,9 +1,11 @@
 #include <algorithm>
 #include <iostream>
+#include <map>
 #include <vector>
 
 using namespace std;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 int main() { 
     vector<int> a, b;
@@ -15,38 +17,53 @@ struct Box {
   int x, y, z;
 };
 
+=======
+>>>>>>> update
 int main() {
-  int n = 0;
-  cin >> n;
-  vector<Box> boxList;
+    int T;
+    cin >> T;
+    for (int t = 0; t < T; t++) {
+        int n, p;
+        cin >> n >> p;
 
-  for (int i = 0; i < n; i++) {
-    Box box;
-    cin >> box.z >> box.x >> box.y;
-    boxList.push_back(box);
-  }
+        map<int, int> skills;
+        int tmp;
 
-  // sort(boxList.begin(), boxList.end(),
-  //      [](Box a, Box b) { return a.x > b.x || (a.x == b.x && a.y > b.y); });
-  sort(boxList.begin(), boxList.end(),
-       [](Box a, Box b) { return (a.x * a.y) > (b.x * b.y); });
+        for (int i = 0; i < n; i++) {
+            cin >> tmp;
+            skills[tmp]++;
+        }
+        cout << endl << "--------------------" << endl;
 
-  vector<int> height(n);
+        auto cur = skills.rbegin();
+        int minCount = 1000000;
+        for (auto cur = skills.rbegin(); cur != skills.rend(); cur++) {
+            cout << cur->first << endl;
+            auto pre = cur;
+            int remaining = p;
 
-  int maxH = 0;
-  for (int i = 0; i < n; i++) {
-    // cout << boxList[i].z << "," << boxList[i].y << "," << boxList[i].x <<
-    // endl;
-    height[i] = boxList[i].z;
+            int count = 0;
+            while (remaining != 0 && pre != skills.rend()) {
+                int k = min(remaining, pre->second);
+                count += k * (cur->first - pre->first);
+                remaining -= k;
+                pre++;
+            }
 
-    int j = i - 1;
-    while (j >= 0) {
-      if (boxList[j].x >= boxList[i].x && boxList[j].y >= boxList[i].y &&
-          height[j] + boxList[i].z > height[i]) {
-        height[i] = height[j] + boxList[i].z;
-      }
-      j--;
+            if (remaining == 0) {
+                minCount = min(minCount, count);
+                // cout << cur->first << "," << cur->second << "," << remaining
+                //      << endl;
+                if (minCount == 0)
+                    break;
+            } else {
+                break;
+            }
+        }
+
+        cout << "Case #" << (t + 1) << ": " << minCount << endl;
     }
+<<<<<<< HEAD
 
     maxH = maxH < height[i] ? height[i] : maxH;
   }
@@ -55,4 +72,7 @@ int main() {
 
   return 0;
 >>>>>>> a9be86b2c9fbf998d404ced90d21090f2a0eb23c
+=======
+    return 0;
+>>>>>>> update
 }

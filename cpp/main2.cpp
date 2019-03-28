@@ -1,11 +1,16 @@
 #include <algorithm>
+#include <bitset>
 #include <iostream>
+<<<<<<< HEAD
 #include <map>
 #include <set>
+=======
+>>>>>>> update
 #include <vector>
 
 using namespace std;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define INF 1000000
 struct Point {
@@ -145,23 +150,65 @@ int search(vector<Box>& box, vector<bool>& flags, int heigh, int x, int y) {
   return maxH;
 }
 
+=======
+>>>>>>> update
 int main() {
-  int n = 0;
-  cin >> n;
-  vector<Box> boxList;
-  vector<bool> flags;
+    int T;
+    cin >> T;
 
-  for (int i = 0; i < n; i++) {
-    Box box;
-    cin >> box.z >> box.x >> box.y;
-    boxList.push_back(box);
-    flags.push_back(false);
-  }
+    for (auto t = 0; t < T; t++) {
+        int row, col;
+        cin >> row >> col;
+        vector<vector<int>> building;
 
-  int maxH = search(boxList, flags, 0, MAX_INT, MAX_INT);
+        string line;
+        for (int i = 0; i < row; i++) {
+            cin >> line;
+            for (int j = 0; j < col; j++) {
+                if (line[j] == '1') {
+                    vector<int> point;
+                    point.push_back(i);
+                    point.push_back(j);
 
-  cout << maxH << endl;
+                    building.push_back(point);
+                }
+            }
+        }
 
+        int rs = 1000000000;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                vector<int> point;
+                point.push_back(i);
+                point.push_back(j);
+
+                building.push_back(point);
+
+                int maxDist = 0;
+                for (int ii = 0; ii < row; ii++) {
+                    for (int jj = 0; jj < col; jj++) {
+                        int minDist = 10000000;
+                        for (auto k = building.begin(); k != building.end();
+                             k++) {
+                            minDist = min(abs(ii - (*k)[0]) + abs(jj - (*k)[1]),
+                                          minDist);
+                        }
+
+                        maxDist = max(maxDist, minDist);
+                    }
+                }
+
+                rs = min(rs, maxDist);
+                building.pop_back();
+            }
+        }
+        cout << "Case #" << (t + 1) << ": " << rs << endl;
+    }
+
+<<<<<<< HEAD
   return 0;
 >>>>>>> a9be86b2c9fbf998d404ced90d21090f2a0eb23c
+=======
+    return 0;
+>>>>>>> update
 }
