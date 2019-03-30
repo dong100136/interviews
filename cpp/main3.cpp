@@ -1,53 +1,44 @@
-#include <algorithm>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
+#define INF 10000;
 
-int main() {
-    int N;
-    cin >> N;
-    for (int nn = 0; nn < N; nn++) {
-        int n;
-        cin >> n;
-        vector<int> nums(n);
-        vector<int> forward(n + 1, 0);
-        vector<int> backward(n + 1, 0);
+struct Problem{
+    int limit,cost;
+};
 
-        int mininum = 10000100;
-        int minIndex = 0;
-        for (int i = 0; i < n; i++) {
-            cin >> nums[i];
-            if (nums[i] < mininum) {
-                mininum = nums[i];
-                minIndex = i;
+int main(){
+    int T;
+    cin >> T;
+    for (int t = 0; t < T;t++){
+        int n, k;
+        cin >> n >> k;
+        vector<Problem> problems;
+
+        int a,b;
+        int sum=0,maxinum=0;
+        for (int i = 0;i<k;i++){
+            cin>>a>>b;
+            problems.push_back(Problem{a,b});
+            sum+=b;
+        }
+
+        sort(problems.begin(),problems.end(),[&](Problem a,Problem b){return a.cost<b.cost;});
+
+
+        int rs = 0;
+        for (auto p:problems){
+            // cout<<p.limit<<","<<p.cost<<endl;
+            if (n<p.limit) {
+                rs+=(p.limit-n);
+                n+=(p.limit-n);
             }
+            n = n-p.cost;
         }
 
-        vector<int> scores(nums.begin() + minIndex, nums.end());
-        scores.insert(scores.end(), nums.begin(), nums.begin() + minIndex + 1);
-
-        // cout << endl << "----";
-        // for (auto t : scores) {
-        //     cout << t << ",";
-        // }
-        // cout << endl;
-
-        forward[0] = 1;
-        for (int i = 0; i < n; i++) {
-            forward[i + 1] = scores[i] < scores[i + 1] ? forward[i] + 1 : 1;
-        }
-
-        backward[n] = 1;
-        for (int i = n; i > 0; i--) {
-            backward[i - 1] = scores[i] < scores[i - 1] ? backward[i] + 1 : 1;
-        }
-
-        int sum = 0;
-        for (int i = 0; i < n; i++) {
-            sum += max(forward[i], backward[i]);
-        }
-        cout << sum << endl;
+        cout<<max(max(sum-n,0),rs)<<endl;
     }
     return 0;
 }
