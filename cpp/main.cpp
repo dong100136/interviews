@@ -1,10 +1,14 @@
 #include <algorithm>
 #include <iostream>
 #include <map>
+#include <queue>
+#include <sstream>
+#include <stack>
+#include <string>
 #include <vector>
-
 using namespace std;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 int main() { 
@@ -28,41 +32,45 @@ int main() {
 
         map<int, int> skills;
         int tmp;
+=======
+class Solution {
+   public:
+    void split(const string& s, vector<string>& sv, const char delim = ' ') {
+        sv.clear();
+        std::istringstream iss(s);
+        std::string temp;
+>>>>>>> update
 
-        for (int i = 0; i < n; i++) {
-            cin >> tmp;
-            skills[tmp]++;
-        }
-        cout << endl << "--------------------" << endl;
-
-        auto cur = skills.rbegin();
-        int minCount = 1000000;
-        for (auto cur = skills.rbegin(); cur != skills.rend(); cur++) {
-            cout << cur->first << endl;
-            auto pre = cur;
-            int remaining = p;
-
-            int count = 0;
-            while (remaining != 0 && pre != skills.rend()) {
-                int k = min(remaining, pre->second);
-                count += k * (cur->first - pre->first);
-                remaining -= k;
-                pre++;
-            }
-
-            if (remaining == 0) {
-                minCount = min(minCount, count);
-                // cout << cur->first << "," << cur->second << "," << remaining
-                //      << endl;
-                if (minCount == 0)
-                    break;
-            } else {
-                break;
-            }
+        while (getline(iss, temp, delim)) {
+            sv.emplace_back(std::move(temp));
         }
 
-        cout << "Case #" << (t + 1) << ": " << minCount << endl;
+        return;
     }
+    bool wordPattern(string pattern, string str) {
+        map<char, string> dict1;
+        set<string> dict2;
+        vector<string> l;
+
+        split(str, l);
+
+        if (l.size() != pattern.size()) return false;
+
+        for (int i = 0; i < l.size(); i++) {
+            char c = pattern[i];
+            string s = l[i];
+            if (dict1.count(c) > 0 && dict1[c] != s) {
+                return false;
+            } else if (dict2.count(s) > 0) {
+                return false;
+            } else {
+                dict1[c] = s;
+                dict2.insert(s);
+            }
+        }
+        return true;
+    }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     maxH = maxH < height[i] ? height[i] : maxH;
@@ -76,3 +84,6 @@ int main() {
     return 0;
 >>>>>>> update
 }
+=======
+};
+>>>>>>> update
