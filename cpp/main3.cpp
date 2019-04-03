@@ -1,99 +1,51 @@
-<<<<<<< HEAD
-=======
-#include <algorithm>
-#include <bitset>
->>>>>>> update
+#include <stdio.h>
+#include <string.h>
 #include <iostream>
 #include <vector>
-#include <algorithm>
-
 using namespace std;
-<<<<<<< HEAD
-#define INF 10000;
 
-struct Problem{
-    int limit,cost;
-};
+// Read only region start
 
-int main(){
-    int T;
-    cin >> T;
-    for (int t = 0; t < T;t++){
-        int n, k;
-        cin >> n >> k;
-        vector<Problem> problems;
+int findPosition(int input1, int input2, int input3[][2]) {
+    // Read only region end
+    // Write code and remove the below exception.
 
-        int a,b;
-        int sum=0,maxinum=0;
-        for (int i = 0;i<k;i++){
-            cin>>a>>b;
-            problems.push_back(Problem{a,b});
-            sum+=b;
+    vector<int> q;
+    for (int i = 0; i < input1; i++) {
+        q.push_back(i + 1);
+    }
+    int head = 0;
+    int result = 0;
+
+    for (int i = 0; i < input2; i++) {
+        for (int i = 0; i < input1; i++) {
+            cout << q[i] << ",";
         }
+        cout << endl;
 
-        sort(problems.begin(),problems.end(),[&](Problem a,Problem b){return a.cost<b.cost;});
+        if (input3[i][0] == 1) {
+            q[head] = 0;
+            head++;
+            // while (q[head] == 0 && head <= input1) head++;
 
-
-        int rs = 0;
-        for (auto p:problems){
-            // cout<<p.limit<<","<<p.cost<<endl;
-            if (n<p.limit) {
-                rs+=(p.limit-n);
-                n+=(p.limit-n);
+            for (int j = 0; j < input1; j++) {
+                if (q[j] == 0) continue;
+                q[j] = q[j] - 1;
             }
-            n = n-p.cost;
+        } else if (input3[i][0] == 2) {
+            q[input3[i][1] - 1] = 0;
+            for (int j = input3[i][1]; j < input1; j++) {
+                if (q[j] == 0) continue;
+                q[j] = q[j] - 1;
+            }
+        } else {
+            result += q[input3[i][1] - 1];
         }
-
-        cout<<max(max(sum-n,0),rs)<<endl;
-=======
-
-const long maxLen = 1000007;
-// const int maxLen = 1;
-
-bitset<maxLen> seats;
-
-struct Range {
-    int l, r, len;
-};
+    }
+    return result;
+}
 
 int main() {
-    int T;
-    cin >> T;
-
-    for (int t = 0; t < T; t++) {
-        int n, q;
-        cin >> n >> q;
-
-        vector<Range> bookings;
-        int l, r;
-        for (int i = 0; i < q; i++) {
-            cin >> l >> r;
-            l = min(n, l);
-            r = min(n, r);
-            bookings.push_back(Range{l, r, r - l + 1});
-        }
-
-        stable_sort(bookings.begin(), bookings.end(),
-                    [&](Range a, Range b) { return a.len < b.len; });
-
-        // cout << endl << "---------------" << endl;
-        int maxCount = 1000007;
-        seats.reset();
-        for (Range book : bookings) {
-            int count = 0;
-            for (int j = book.l; j <= book.r; j++) {
-                count += seats.test(j) ? 0 : 1;
-                seats.set(j);
-            }
-            // cout << count << endl;
-            maxCount = min(maxCount, count);
-            if (maxCount == 0)
-                break;
-        }
-
-        cout << "Case #" << (t + 1) << ": " << maxCount << endl;
->>>>>>> update
-    }
-
-    return 0;
+    int nums[][2] = {{1, 0}, {3, 3}, {2, 2}};
+    cout << findPosition(5, 3, nums) << endl;
 }
