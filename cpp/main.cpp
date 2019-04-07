@@ -1,32 +1,43 @@
-#include <stdio.h>
-#include <string.h>
+#include <algorithm>
 #include <iostream>
+#include <queue>
+#include <stack>
+#include <vector>
+
 using namespace std;
 
-void search(int n, int target, int maxStep, int i, int k, int &count) {
-    if (k > maxStep) return;
-    if (k != 0 && i == target) count++;
+int main() {
+    int n;
+    cin >> n;
 
-    cout << i << "," << k << endl;
+    queue<int> buy_queue;
+    queue<int> sell_queue;
+    vector<int> nums(n);
+    long cost = 0;
 
-    for (int j = 1; j <= n; ++j) {
-        if ((i < j && j % i == 0) || (i > j && i % j == 0)) {
-            search(n, target, maxStep, j, k + 1, count);
+    for (int i = 0; i < n; i++) {
+        cin >> nums[i];
+        if (nums[i] < 0)
+            sell_queue.push(i);
+        else if (nums[i] > 0)
+            buy_queue.push(i);
+        nums[i] = abs(nums[i]);
+
+        while (!sell_queue.empty() && !buy_queue.empty()) {
+            int buy = buy_queue.front();
+            int sell = sell_queue.front();
+            int count = min(nums[buy], nums[sell]);
+
+            nums[buy] = nums[buy]-count;
+            nums[sell] =nums[sell]-count;
+
+            cost =cost+ abs(buy - sell) * count;
+            if (nums[buy] == 0) buy_queue.pop();
+            if (nums[sell] == 0) sell_queue.pop();
         }
     }
-}
-// Read only region start
 
-int maxCircles(int input1, int input2, int input3) {
-    // Read only region end
-    // Write code and remove the below exception.
-    int count = 0;
-    search(input1, input2, input3, input2, 0, count);
-    return count;
-}
+    cout << cost << endl;
 
-int main() {
-    int rs = maxCircles(3, 2, 4);
-    cout << rs << endl;
     return 0;
 }
