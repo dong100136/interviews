@@ -1,39 +1,15 @@
-#include <algorithm>
+#include <cmath>
 #include <iostream>
-#include <map>
-#include <queue>
-#include <stack>
-#include <string>
-#include <vector>
-
 using namespace std;
-
-class A {
-    char a[10];
-    int b;
-
-   public:
-    A(char *aa, int bb) {
-        strcpy(a, aa);
-        b = bb;
-    }
-
-    char *Geta() { return a; }
-    int Getb() { return b; }
-    A &operator>(A &c) {
-        if (strcmp(a, c.a) > 0 && (b > c.b))
-            return *this;
-        else
-            return c;
-    }
-
-    void show() { cout << a << ":" << b; }
-};
+int p[10];
+int f(int *a, int n) {
+    int x = *(a + 3);
+    for (int *pa = a + 1; pa < a + n; pa++)
+        if (*pa > x) x = *pa;
+    return x;
+}
 
 int main() {
-    char *p1 = "abcd", *p2 = "efgh";
-    int d1 = 6, d2 = 8;
-    A x(p1, d1), y(p2, d2);
-    (x > y).show();
-    return 0;
+    int x[10] = {23, 46, 78, 99, 16, 24, 56, 90, 67, 44};
+    cout << -3 % 10 << endl;
 }
