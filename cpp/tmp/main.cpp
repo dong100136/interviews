@@ -1,15 +1,34 @@
-#include <cmath>
+#include <algorithm>
+#include <iomanip>
 #include <iostream>
+#include <queue>
+#include <stack>
+#include <vector>
+
 using namespace std;
-int p[10];
-int f(int *a, int n) {
-    int x = *(a + 3);
-    for (int *pa = a + 1; pa < a + n; pa++)
-        if (*pa > x) x = *pa;
-    return x;
-}
 
 int main() {
-    int x[10] = {23, 46, 78, 99, 16, 24, 56, 90, 67, 44};
-    cout << -3 % 10 << endl;
+    int n;
+    cin >> n;
+
+    vector<double> nums;
+    double tmp;
+    for (int i = 0; i < n; i++) {
+        cin >> tmp;
+        nums.push_back(tmp);
+    }
+
+    int k = 0;
+    double p1 = 0;
+    double p2 = 0;
+    double fail = 1;
+    while (k < 100) {
+        p1 = p1 + (1 - p2) * nums[k % n];
+        k++;
+        p2 = p2 + (1 - p2) * nums[k % n];
+        k++;
+    }
+    cout << setiosflags(ios::fixed) << setprecision(4);
+    cout << p1 << endl;
+    return 0;
 }
